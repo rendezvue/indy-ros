@@ -52,8 +52,8 @@ class IndyROSConnector:
         # Misc variable
         self.joint_state_list = []
         self.execute = False
-        self.vel = 1
-        self.blend = 5
+        self.vel = 10
+        self.blend = 10
 
     def __del__(self):
         self.indy.disconnect()
