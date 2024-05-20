@@ -85,14 +85,19 @@ class IndyROSConnector:
         self.blend = param_array[1]
 
     def move_robot(self):
-        if self.joint_state_list:
-            prog = indy_program_maker.JsonProgramComponent(policy=0, resume_time=2)
+        # if self.joint_state_list:
+        #     prog = indy_program_maker.JsonProgramComponent(policy=0, resume_time=0)
                 
-            for j_pos in self.joint_state_list:
-                prog.add_joint_move_to(utils_transf.rads2degs(j_pos), vel=self.vel, blend=self.blend)
+        #     for j_pos in self.joint_state_list:
+        #         prog.add_joint_move_to(utils_transf.rads2degs(j_pos), vel=self.vel, blend=self.blend)
             
-            json_string = json.dumps(prog.json_program)
-            self.indy.set_and_start_json_program(json_string)
+        #     json_string = json.dumps(prog.json_program)
+        #     self.indy.set_and_start_json_program(json_string)
+        #     self.joint_state_list = []
+        if self.joint_state_list:
+            if len(self.joint_state_list)==1:
+                # print(self.joint_state_list[0])
+                self.indy.joint_move_to(utils_transf.rads2degs(self.joint_state_list[0]))                            
             self.joint_state_list = []
 
     def joint_state_publisher(self):
