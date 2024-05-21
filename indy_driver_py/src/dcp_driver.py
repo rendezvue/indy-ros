@@ -52,8 +52,8 @@ class IndyROSConnector:
         # Misc variable
         self.joint_state_list = []
         self.execute = False
-        self.vel = 100
-        self.blend = 100
+        self.vel = 9
+        self.blend = 9
 
     def __del__(self):
         self.indy.disconnect()
@@ -97,6 +97,7 @@ class IndyROSConnector:
         if self.joint_state_list:
             if len(self.joint_state_list)==1:
                 # print(self.joint_state_list[0])
+                self.indy.set_joint_vel_level(self.vel)
                 self.indy.joint_move_to(utils_transf.rads2degs(self.joint_state_list[0]))                            
             self.joint_state_list = []
 
@@ -178,6 +179,8 @@ class IndyROSConnector:
                     continue
                 if self.current_robot_status['ready']:
                     self.move_robot()
+                    
+            rospy.sleep(0.01)
 
         self.indy.disconnect()
 
